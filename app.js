@@ -1,15 +1,36 @@
-require('dotenv').config();
+require("dotenv").config();
 const express = require("express");
+const swaggerJSDoc = require("swagger-jsdoc");
+const swaggerUi = require("swagger-ui-express");
 const cors = require("cors");
 const JWTToken = require("jsonwebtoken");
 const jwtKey = "ecomm";
 require("./db/config");
 const User = require("./db/SchemaModels/User");
 const Product = require("./db/SchemaModels/AddProduct");
-const PORT = process.env.PORT||5000;
+const PORT = process.env.PORT || 5000;
 const app = express();
 app.use(express.json());
 app.use(cors());
+
+const options = {
+  definition: {
+    openapi: "3.0.0",
+    info: {
+      title: "Node Js API for ECOM",
+      version: "1.0.0",
+    },
+    servers: [
+      {
+        api: "https://backend-node-black-kappa.vercel.app",
+      },
+    ],
+  },
+  apis: ["./app.js"],
+};
+
+const swaggerSpec = swaggerJSDoc(options);
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 app.post("/register", async (req, res) => {
   let user = new User(req.body);
