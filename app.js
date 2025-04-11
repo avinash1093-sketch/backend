@@ -1,11 +1,12 @@
+require('dotenv').config();
 const express = require("express");
 const cors = require("cors");
-const JWTToken = require("JWTToken");
+const JWTToken = require("jsonwebtoken");
 const jwtKey = "ecomm";
 require("./db/config");
 const User = require("./db/SchemaModels/User");
 const Product = require("./db/SchemaModels/AddProduct");
-const PORT = 5000;
+const PORT = process.env.PORT||5000;
 const app = express();
 app.use(express.json());
 app.use(cors());
