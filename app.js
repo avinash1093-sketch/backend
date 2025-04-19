@@ -22,7 +22,7 @@ const options = {
     },
     servers: [
       {
-        api: "https://backend-node-black-kappa.vercel.app",
+        url: "http://localhost:5000",
       },
     ],
   },
@@ -31,6 +31,19 @@ const options = {
 
 const swaggerSpec = swaggerJSDoc(options);
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+
+/**
+ * @swagger
+ * /register:
+ *  post:
+ *   summary: This api is used to register new user
+ *   description: This api is used to register new user
+ *   responses:
+ *    200:
+ *     description: To get success in saving User data
+ *     content:
+ *      application/json
+ */
 
 app.post("/register", async (req, res) => {
   let user = new User(req.body);
